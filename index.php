@@ -4,8 +4,11 @@
 session_start();
 // If the user is logged in, redirect to the home page
 if (isset($_SESSION['account_loggedin'])) {
-    header('Location: home.php');
+    header('Location: ./html/home.php');
     exit;
+}
+if (isset($_GET['registered']) && $_GET['registered'] === 'success') {
+    echo '<p style="color: green; text-align: center;">Registration successful! You can now log in.</p>';
 }
 ?>
 <!DOCTYPE html>
@@ -13,6 +16,7 @@ if (isset($_SESSION['account_loggedin'])) {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,minimum-scale=1">
+        <link rel="stylesheet" href="./css/login.css">
         <title>Login</title>
     </head>
     <body>
