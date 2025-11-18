@@ -1,18 +1,15 @@
-const testDiv = document.getElementById("test-div-js");
+const luister_button = document.getElementById("luisteren-id");
+const inlog_button = document.getElementById("inloggen-id");
+const aanmeld_button = document.getElementById("aanmelden-id");
 
-testDiv.addEventListener("click", function () {
-    console.log("Hello World!");
+luister_button.addEventListener("click", function(){
+    window.location.href = "muziek-luisteren.html";
 });
 
-
-const nav = document.getElementById("nav-js");
-
-nav.addEventListener("click", function () {
-    console.log("Nav werkt!");
+inlog_button.addEventListener("click", function(){
+    window.location.href = "inloggen.html";
 });
 
-const aanmelden_button = document.getElementById("aanmelden-button-id");
-
-aanmelden_button.addEventListener("click", function(){
-    console.log("aanmeldbutton werkt!");
+aanmeld_button.addEventListener("click", function(){
+    window.location.href = "aanmelden.html";
 })

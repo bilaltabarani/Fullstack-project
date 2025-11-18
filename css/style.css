@@ -47,7 +47,7 @@ a {
 }
 
 .main-css {
-    height: 30vh;
+    height: 90vh;
     width: 100vw;
     border: 2px solid #000000;
     display: flex;
@@ -55,11 +55,46 @@ a {
     justify-content: center;
     align-items: center;
     margin-top: 10vh;
-    background-image: url("/images/piano-img.png");
+    background-image: url("/images/piano-img.png")
 }
 
 .desc-div {
+    height: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #000000;
 }
 
+.buttons-div {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: end;
+    padding: 20px;
+}
 
+.buttons-div button {
+    height: 30px;
+    width: 150px;
+    border: none;
+    background-color: #000095;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+
+.buttons-div button:hover {
+    cursor: pointer;
+    background-color: #00008b;
+}
+
+.buttons-div button:active {
+    background-color: #00005d;
+    transform: translateY(2px);
+}

@@ -15,27 +15,36 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="over-ons.html">Over Ons</a></li>
+            <li><a href="muziek-luisteren.html">Muziek luisteren</a></li>
             <li><a href="inloggen.html">Inloggen</a></li>
             <li><a href="aanmelden.html">Aanmelden</a></li>
         </ul>
     </nav>
     <div class="aanmelden-div-css">
         <div class="aanmelden-box-css">
-            <header>
-                Aanmelden
+            <header class="aanmeld-header-css">
+                <h1>Aanmelden</h1>
             </header>
-            <section class="aanmelden-section-css">
-                <p>Gebruikersnaam</p>
-                <input type="text" placeholder="Gebruikersnaam...">
-                E-mail
-                <input type="email" placeholder="E-mail...">
-                Wachtwoord
-                <input type="password" placeholder="Wachtwoord...">
-                Herhaal uw wachtwoord
-                <input type="password" placeholder="Herhaald wachtwoord...">
+            <section class="aanmeld-section-css">
+                <div class="aanmeld-section-div-css">
+                    <p>Gebruikersnaam</p>
+                    <input class="text-field-css" id="username-field-js" type="text" placeholder="Gebruikersnaam...">
+                </div>
+                <div class="aanmeld-section-div-css">
+                    <p>E-mail</p>
+                    <input class="text-field-css" id="email-field-js" type="email" placeholder="E-mail...">
+                </div>
+                <div class="aanmeld-section-div-css">
+                    <p>Wachtwoord</p>
+                    <input class="ww-field-css" id="pw1-field-js" type="password" placeholder="Wachtwoord...">
+                </div>
+                <div class="aanmeld-section-div-css">
+                    <p>Herhaal uw wachtwoord</p>
+                    <input class="ww-field-css" id="pw2-field-js" type="password" placeholder="Herhaald wachtwoord...">
+                </div>
             </section>
-            <footer>
-                <button class="aanmelden-button-css" id="aanmelden-button-id">
+            <footer class="aanmeld-footer-css">
+                <button class="aanmelden-button-css" id="aanmelden-button-js">
                     Meld u aan
                 </button>
             </footer>
