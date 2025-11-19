@@ -11,4 +11,7 @@
 
 -- INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `registered`) VALUES (1, 'test', '$2y$10$SfhYIDtn.iOuCW7zfoFLuuZHX6lja4lF4XA4JqNmpiH/.P3zB8JCa', 'test@example.com', '2025-01-01 00:00:00');
 
-// verrander de database waar nodig in authenticate.php en dergelijke bestanden.
+-- verrander de database waar nodig in authenticate.php en dergelijke bestanden.
+
+-- Als het nodig is zet de clientid in spotifylogin.html anders en maak je eigen app hiervoor.
+-- http://127.0.0.1/ Voor als je de spotify API wilt gebruiken. Zorg ervoor dat je op poort 80 zit in xampp of verrander de redirect URI in de code.
