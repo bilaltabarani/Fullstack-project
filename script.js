@@ -2,14 +2,29 @@ const luister_button = document.getElementById("luisteren-id");
 const inlog_button = document.getElementById("inloggen-id");
 const aanmeld_button = document.getElementById("aanmelden-id");
 
-luister_button.addEventListener("click", function(){
-    window.location.href = "muziek-luisteren.html";
+function naarMuziekLuisteren() {
+    window.location.href = "/ingelogd/html/muziek.html";
+
+}
+
+function naarInloggen() {
+    window.location.href = "/uitgelogd/html/inloggen.html";
+
+}
+
+function naarAanmelden() {
+    window.location.href = "/uitgelogd/html/aanmelden.html";
+
+}
+
+luister_button.addEventListener("click", function () {
+    naarMuziekLuisteren();
 });
 
-inlog_button.addEventListener("click", function(){
-    window.location.href = "inloggen.html";
+inlog_button.addEventListener("click", function () {
+   naarInloggen();
 });
 
-aanmeld_button.addEventListener("click", function(){
-    window.location.href = "aanmelden.html";
+aanmeld_button.addEventListener("click", function () {
+    naarAanmelden();
 })
