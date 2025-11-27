@@ -54,6 +54,12 @@ input{
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+section h2{
+    color: red;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 
 .aanmelden-div-css{
     margin-top: 10vh;
@@ -133,3 +139,4 @@ input{
   background-color: #00005d;
   transform: translateY(2px);
 }
+
