@@ -46,16 +46,29 @@ a {
     color: #FFFFFF;
 }
 
-.main-css {
-    height: 30vh;
-    width: 100vw;
-    border: 2px solid #000000;
+.container{
+    margin-top: 12vh;
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    margin-top: 10vh;
-    background-image: url("/images/piano-img.png");
+    gap: 100px;
 }
 
+.muziek-div{
+    height: 50vh;
+    width: 35%;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
+button{
+    height: 20%;
+}

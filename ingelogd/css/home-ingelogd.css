@@ -46,16 +46,30 @@ a {
     color: #FFFFFF;
 }
 
-.main-css {
-    height: 30vh;
-    width: 100vw;
-    border: 2px solid #000000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+div{
+    height: 20vh;
+    width: 50vw;
     margin-top: 10vh;
-    background-image: url("/images/piano-img.png");
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+    padding: 10px;
 }
 
+button{
+    height: 40px;
+    width: 100%;
+    background-color: #0000be;
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    color: white;
+}
 
+button:hover{
+    background-color: #00008b;
+    cursor: pointer;
+}
