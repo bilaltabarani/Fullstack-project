@@ -12,9 +12,47 @@ function spotifyGET($url, $token) {
             "header" => "Authorization: Bearer $token"
         ]
     ];
-    return json_decode(file_get_contents($url, false, stream_context_create($opts)), true);
+    $response = file_get_contents($url, false, stream_context_create($opts));
+    if (!$response) return null;
+    return json_decode($response, true);
 }
 
-$playlists = spotifyGET("https://api.spotify.com/v1/me/playlists?limit=50", $token);
+function fetchAll($url, $token) {
+    $allItems = [];
+    while ($url) {
+        $data = spotifyGET($url, $token);
+        if (!$data) break;
+        if (isset($data['items'])) {
+            $allItems = array_merge($allItems, $data['items']);
+        }
+        $url = $data['next'] ?? null;
+    }
+    return $allItems;
+}
 
-echo json_encode($playlists);
+$playlistsData = spotifyGET("https://api.spotify.com/v1/me/playlists?limit=50", $token);
+if (!$playlistsData) die(json_encode(["error" => "Failed to fetch playlists"]));
+
+$playlists = $playlistsData['items'];
+
+foreach ($playlists as &$playlist) {
+    $playlistId = $playlist['id'];
+    $tracksItems = fetchAll("https://api.spotify.com/v1/playlists/$playlistId/tracks?limit=50", $token);
+    
+    $playlist['tracks_list'] = [];
+    foreach ($tracksItems as $item) {
+        if (isset($item['track'])) {
+            $track = $item['track'];
+            $playlist['tracks_list'][] = [
+                "name" => $track['name'],
+                "artists" => array_map(fn($a) => $a['name'], $track['artists']),
+                "id" => $track['id'],
+                "uri" => $track['uri']
+            ];
+        }
+    }
+}
+
+echo json_encode([
+    "items" => $playlists
+]);
