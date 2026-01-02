@@ -23,21 +23,25 @@
             return result;
         }
 
-        async function sha256(str) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(str);
-            const hash = await crypto.subtle.digest("SHA-256", data);
-            return new Uint8Array(hash);
+        async function sha256(verifier) {
+            const data = new TextEncoder().encode(verifier);
+            return await crypto.subtle.digest("SHA-256", data);
         }
 
-        function base64URLEncode(bytes) {
-            return btoa(String.fromCharCode(...bytes))
-                .replace(/\+/g, "-")
-                .replace(/\//g, "_")
-                .replace(/=+$/, "");
+        function base64URLEncode(buffer) {
+            return btoa(
+                Array.from(new Uint8Array(buffer))
+                    .map(b => String.fromCharCode(b))
+                    .join("")
+            )
+            .replace(/\+/g, "-")
+            .replace(/\//g, "_")
+            .replace(/=+$/, "");
         }
 
         document.getElementById("loginBtn").onclick = async () => {
+            localStorage.removeItem("code_verifier");
+
             const codeVerifier = generateRandomString(128);
             localStorage.setItem("code_verifier", codeVerifier);
 
@@ -55,7 +59,7 @@
                 `&code_challenge=${codeChallenge}` +
                 `&scope=${encodeURIComponent(scope)}`;
 
-            window.location = authUrl;
+            window.location.href = authUrl;
         };
     </script>
 </body>

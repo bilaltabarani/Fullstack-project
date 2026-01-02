@@ -86,7 +86,7 @@
                 <h2>Playlist Created 🎉</h2>
                 <p><b>Name:</b> ${data.playlist.name}</p>
                 <p><b>Playlist ID:</b> ${data.playlist.id}</p>
-                <P>You can find the playlist on your account, or click right next to here and see it in the list!</P>
+                <p>You can find the playlist on your account, or see it in the list below!</p>
             `;
         };
 
@@ -107,7 +107,13 @@
 
             let html = "<h2>Your Playlists</h2><ul>";
             data.items.forEach(pl => {
-                html += `<li>${pl.name} (${pl.tracks.total} tracks)</li>`;
+                html += `<li><b>${pl.name}</b> (${pl.tracks.total} tracks)<ul>`;
+                if (pl.tracks_list) {
+                    pl.tracks_list.forEach(track => {
+                        html += `<li>${track.name} by ${track.artists.join(", ")}</li>`;
+                    });
+                }
+                html += "</ul></li>";
             });
             html += "</ul>";
 
