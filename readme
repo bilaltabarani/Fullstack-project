@@ -13,7 +13,7 @@
 
 -- verrander de database waar nodig in authenticate.php en dergelijke bestanden.
 
--- Als het nodig is zet de clientid in spotifylogin.html anders en maak je eigen app hiervoor.
+-- Als het nodig is zet de clientid in spotifylogin.php anders en maak je eigen app hiervoor.
 -- http://127.0.0.1/ Voor als je de spotify API wilt gebruiken. Zorg ervoor dat je op poort 80 zit in xampp of verrander de redirect URI in de code.
 
 -- nieuwe database tabel voor likes en comments, ga deze later automatisch maken:
