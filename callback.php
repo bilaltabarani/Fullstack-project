@@ -1,180 +1,188 @@
-<?php
-session_start();
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Spotify Callback</title>
+<meta charset="UTF-8">
+<title>Spotify Callback</title>
 </head>
+
 <body style="font-family: Arial; margin: 40px;">
-    <h1>Spotify Options</h1>
-    <div id="status">Loading...</div>
 
-    <div id="actions" style="margin-top:20px; display:none;">
-        <button id="createPlaylistBtn" style="padding:10px 18px; font-size:16px; margin-right:15px;">
-            Create Playlist from Top 5 Tracks
-        </button>
+<h1>Spotify Dashboard</h1>
+<div id="status">Loading...</div>
 
-        <button id="showPlaylistsBtn" style="padding:10px 18px; font-size:16px;">
-            Show All My Playlists
-        </button>
-    </div>
+<div id="actions" style="display:none;">
 
-    <div id="result" style="margin-top:30px;"></div>
+    <button id="createPlaylistBtn">Create Playlist from Top 5 Tracks</button>
+    <button id="showPlaylistsBtn">Show All My Playlists</button>
 
-    <script>
-        const clientId = "f7e11fa93c254442b9e46b69b406b838";
-        const redirectUri = "http://127.0.0.1/fullstack-project/Fullstack-project/callback.php";
+    <hr>
 
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get("code");
+    <h3>Add a Song to a Playlist</h3>
 
-        if (!code) {
-            document.getElementById("status").innerHTML =
-                "<b>Error:</b> No authorization code found!";
-        } else {
-            exchangeToken(code);
-        }
+    <input id="songInput" placeholder="Enter song name" style="padding:8px;width:300px;">
+    <button onclick="searchSong()">Search</button>
 
-        let accessToken = null;
+    <div id="searchResults" style="margin-top:15px;"></div>
 
-        async function exchangeToken(code) {
-            const codeVerifier = localStorage.getItem("code_verifier");
+    <h4>Select Playlist</h4>
+    <select id="playlistSelect" style="padding:8px;width:320px;">
+        <option value="">-- Choose a playlist --</option>
+    </select>
 
-            const body = new URLSearchParams({
-                client_id: clientId,
-                grant_type: "authorization_code",
-                code: code,
-                redirect_uri: redirectUri,
-                code_verifier: codeVerifier
-            });
+    <br><br>
+    <button onclick="addSelectedSong()">Add Song to Playlist</button>
 
-            const result = await fetch("https://accounts.spotify.com/api/token", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body
-            });
+</div>
 
-            const data = await result.json();
+<div id="result" style="margin-top:30px;"></div>
 
-            if (!data.access_token) {
-                document.getElementById("status").innerHTML =
-                    "<b>Token Error:</b> " + JSON.stringify(data);
-                return;
-            }
+<script>
+const clientId = "f7e11fa93c254442b9e46b69b406b838";
+const redirectUri = "http://127.0.0.1/fullstack-project/Fullstack-project/callback.php";
 
-            accessToken = data.access_token;
+let accessToken = null;
+let selectedTrackUri = null;
 
-            document.getElementById("status").innerHTML = "Logged in successfully!";
-            document.getElementById("actions").style.display = "block";
-        }
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
 
-        document.getElementById("createPlaylistBtn").onclick = async () => {
-            document.getElementById("result").innerHTML = "Creating playlist...";
-            const response = await fetch("createplaylist.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: accessToken })
-            });
+if (code) exchangeToken(code);
 
-            const data = await response.json();
+async function exchangeToken(code) {
+    const body = new URLSearchParams({
+        client_id: clientId,
+        grant_type: "authorization_code",
+        code,
+        redirect_uri: redirectUri,
+        code_verifier: localStorage.getItem("code_verifier")
+    });
 
-            if (data.error) {
-                document.getElementById("result").innerHTML = "<b>Error:</b> " + data.error;
-                return;
-            }
+    const res = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+    });
 
-            document.getElementById("result").innerHTML = `
-                <h2>Playlist Created 🎉</h2>
-                <p><b>Name:</b> ${data.playlist.name}</p>
-                <p><b>Playlist ID:</b> ${data.playlist.id}</p>
-                <p>You can find the playlist on your account, or see it in the list below!</p>
-            `;
-        };
+    const data = await res.json();
+    accessToken = data.access_token;
 
-        document.getElementById("showPlaylistsBtn").onclick = async () => {
-            document.getElementById("result").innerHTML = "Loading playlists...";
-            const response = await fetch("getplaylists.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: accessToken })
-            });
+    document.getElementById("status").innerText = "Logged in successfully ✅";
+    document.getElementById("actions").style.display = "block";
 
-            const data = await response.json();
-            if (data.error) {
-                document.getElementById("result").innerHTML = "<b>Error:</b> " + data.error;
-                return;
-            }
+    loadPlaylistDropdown();
+}
 
-            let html = "<h2>Your Playlists</h2><ul>";
-            data.items.forEach(pl => {
-                html += `
-                    <li>
-                        <b>${pl.name}</b> (${pl.tracks.total} tracks)
-                        <br>
-                        <button onclick="likePlaylist('${pl.id}')">❤️ Like</button>
-                        <button onclick="addComment('${pl.id}')">💬 Comment</button>
-                        <div id="social-${pl.id}">Loading...</div>
-                        <ul>
-                `;
-                if (pl.tracks_list) {
-                    pl.tracks_list.forEach(track => {
-                        html += `<li>${track.name} by ${track.artists.join(", ")}</li>`;
-                    });
-                }
-                html += "</ul></li>";
+document.getElementById("createPlaylistBtn").onclick = async () => {
+    const res = await fetch("createplaylist.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: accessToken })
+    });
 
-                loadSocial(pl.id);
-            });
-            html += "</ul>";
+    const data = await res.json();
+    document.getElementById("result").innerHTML =
+        data.error ? data.error : `<b>Playlist created:</b> ${data.playlist.name}`;
+};
 
-            document.getElementById("result").innerHTML = html;
-        };
+document.getElementById("showPlaylistsBtn").onclick = async () => {
+    const res = await fetch("getplaylists.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: accessToken })
+    });
 
-        async function likePlaylist(playlistId) {
-            const res = await fetch("like_playlist.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ playlist_id: playlistId }),
-                credentials: "same-origin"
-            });
+    const data = await res.json();
+    let html = "<h2>Your Playlists</h2><ul>";
 
-            const data = await res.json();
-            alert(data.message);
-            loadSocial(playlistId);
-        }
+    data.items.forEach(pl => {
+        html += `<li><b>${pl.name}</b><ul>`;
+        pl.tracks_list.forEach(t => {
+            html += `<li>${t.name} – ${t.artists.join(", ")}</li>`;
+        });
+        html += "</ul></li>";
+    });
 
-        async function addComment(playlistId) {
-            const comment = prompt("Write a comment");
-            if (!comment) return;
+    html += "</ul>";
+    document.getElementById("result").innerHTML = html;
+};
 
-            await fetch("comment_playlist.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ playlist_id: playlistId, comment }),
-                credentials: "same-origin"
-            });
+async function searchSong() {
+    const query = document.getElementById("songInput").value;
 
-            loadSocial(playlistId);
-        }
+    const res = await fetch("search_track.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: accessToken, query })
+    });
 
-        async function loadSocial(playlistId) {
-            const res = await fetch("get_social.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ playlist_id: playlistId }),
-                credentials: "same-origin"
-            });
+    const tracks = await res.json();
+    let html = "<ul>";
 
-            const data = await res.json();
-            let html = `<p>❤️ ${data.likes} likes</p><ul>`;
-            data.comments.forEach(c => {
-                html += `<li><b>${c.username}</b>: ${c.comment}</li>`;
-            });
-            html += "</ul>";
-            document.getElementById("social-" + playlistId).innerHTML = html;
-        }
-    </script>
+    tracks.forEach(t => {
+        html += `
+            <li>
+                ${t.name} – ${t.artists.join(", ")}
+                <button onclick="selectTrack('${t.uri}')">Select</button>
+            </li>`;
+    });
+
+    html += "</ul>";
+    document.getElementById("searchResults").innerHTML = html;
+}
+
+function selectTrack(uri) {
+    selectedTrackUri = uri;
+    alert("Song selected! Now choose a playlist.");
+}
+
+async function loadPlaylistDropdown() {
+    const res = await fetch("getplaylists.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: accessToken })
+    });
+
+    const data = await res.json();
+    const select = document.getElementById("playlistSelect");
+
+    select.innerHTML = `<option value="">-- Choose a playlist --</option>`;
+
+    data.items.forEach(pl => {
+        const opt = document.createElement("option");
+        opt.value = pl.id;
+        opt.textContent = pl.name;
+        select.appendChild(opt);
+    });
+}
+
+async function addSelectedSong() {
+    const playlistId = document.getElementById("playlistSelect").value;
+
+    if (!selectedTrackUri) {
+        alert("Select a song first!");
+        return;
+    }
+
+    if (!playlistId) {
+        alert("Select a playlist!");
+        return;
+    }
+
+    const res = await fetch("add_to_playlist.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            token: accessToken,
+            playlist_id: playlistId,
+            track_uri: selectedTrackUri
+        })
+    });
+
+    const data = await res.json();
+    alert(data.success ? "Song added 🎶" : "Failed to add song");
+}
+</script>
+
 </body>
 </html>
