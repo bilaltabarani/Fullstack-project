@@ -38,8 +38,8 @@
 <div id="result" style="margin-top:30px;"></div>
 
 <script>
-const clientId = "";
-const redirectUri = "http://127.0.0.1/Fullstack-project/callback.php?code=AQB6TEgB8UmSL1XhOxIasj3dY6FPjDnN00AvNrdh66Y-1pe1mmR3sM5hHFGxoLQdqzsg-BbfOojM18i2coe_ISQi-4T8pxS7OMwhPyzdAsUvz3z-zpKdaBJpsVT5CDmMv6P4wLDvlyS3hOtQloUZdEiGlVs0TiZR8KYKUyn8QLK2O44V3wTn3snCaHiCrIFb269AGCLiPRqHojHph7pe5vU4j-D7sFDiWvqU9g6YCyVeoIwkoWU_Hr7--J-mXsDYocISCm9rCkS3cqgcrOHhvb-BMKSYBAVGHOZ1PscaxdNKo6EO0wmCvQHmUvO1YrtEM9jR6-6lKh_hW_QwJBGAkqqLjoLUVGqmelVNaSREFxCvqnZfK5nBqw";
+ const clientId = "f7e11fa93c254442b9e46b69b406b838";
+ const redirectUri = "http://127.0.0.1/fullstack-project/Fullstack-project/callback.php";
 
 let accessToken = null;
 let selectedTrackUri = null;
