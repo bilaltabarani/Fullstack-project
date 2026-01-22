@@ -32,3 +32,4 @@
 -- Als het nodig is zet de clientid in spotifylogin.php anders en maak je eigen app hiervoor.
 -- http://127.0.0.1/ Voor als je de spotify API wilt gebruiken. Zorg ervoor dat je op poort 80 zit in xampp of verrander de redirect URI in de code.
 -- Dit is de volledige link: http://127.0.0.1/fullstack-project/Fullstack-project/callback.php
+-- verrander ook de clientId in spotifylogin.php en callback.php naar jouw clientId.
