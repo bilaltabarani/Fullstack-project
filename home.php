@@ -16,13 +16,11 @@ if (!isset($_SESSION['account_loggedin'])) {
 </head>
 
 <body>
-    <nav id="nav-js">
+    <nav>
         <h2><a href="home.php">MusicMatch</a></h2>
         <ul>
             <li><a href="home.php">Home</a></li>
-            <li><a href="spotifylogin.html">Muziek afspelen</a></li>
-            <li><a href="spotifylogin.html">Playlist aanmaken</a></li>
-            <li><a href="user.php">Mijn account</a></li>
+            <li><a href="spotifylogin.html">Muziek/Playlists</a></li>
             <a href="logout.php">
                 <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->

@@ -45,3 +45,16 @@ a {
     text-decoration: none;
     color: #FFFFFF;
 }
+
+button{
+    height: 30%;
+    width: 13%;
+    background-color: #0000bd;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: #00008b;
+}

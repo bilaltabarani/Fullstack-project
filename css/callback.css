@@ -46,29 +46,70 @@ a {
     color: #FFFFFF;
 }
 
-.container{
-    margin-top: 12vh;
+main{
+    margin-top: 10vh;
     height: 100%;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 100px;
-}
-
-.muziek-div{
-    height: 50vh;
-    width: 35%;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 button{
-    height: 20%;
+    background-color: #0000bd;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: #00008b;
+}
+
+.main-div{
+    display: flex;
+    flex-direction: column;
+    height: 30vh;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+.main-div span{
+    height: 50%;
+    width: 100%;
+    padding: 10px;
+    gap: 20px;
+}
+
+.main-div button{
+    height: 70px;
+    width: 90px;
+}
+
+.playlists-display-div{
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+.playlists-display-div button{
+    height: 50px;
+    width: 80px;
+}
+
+.playlists-select-div{
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.playlists-select-div button{
+    height: 50px;
+    width: 80px;
 }
