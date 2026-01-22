@@ -40,7 +40,7 @@ if ($stmt->num_rows > 0) {
         $_SESSION['account_name'] = $_POST['username'];
         $_SESSION['account_id'] = $id;
         // Output success message
-        header('Location: ./html/home.php');
+        header('Location: home.php');
         exit;
     } else {
         // Incorrect password

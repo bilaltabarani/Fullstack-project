@@ -38,8 +38,8 @@
 <div id="result" style="margin-top:30px;"></div>
 
 <script>
-const clientId = "f7e11fa93c254442b9e46b69b406b838";
-const redirectUri = "http://127.0.0.1/fullstack-project/Fullstack-project/callback.php";
+ const clientId = "f7e11fa93c254442b9e46b69b406b838";
+ const redirectUri = "http://127.0.0.1/fullstack-project/Fullstack-project/callback.php";
 
 let accessToken = null;
 let selectedTrackUri = null;

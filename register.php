@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['account_loggedin'])) {
-	header('Location: home.php');
+	header('Location: ./php/home.php');
 	exit;
 }
 ?>
